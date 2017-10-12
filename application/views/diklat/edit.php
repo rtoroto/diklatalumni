@@ -39,6 +39,10 @@ $class      ="class='form-control'";
         <td>Golongan </td>
         <td><?=$r['gol']?></td>
       </tr>
+      <tr>
+        <td>instansi </td>
+        <td><?=$r['instansi']?></td>
+      </tr>
           <tr>
             <td>Nama Diklat </td>
             <td><?php echo inputan('text', 'namadiklat','col-sm-6','Nama Diklat ..', 1, $r['namadiklat'],'');?></td>
