@@ -46,7 +46,8 @@ var $diklat='diklat';
         // bikin array
         // please select berikut ini merupakan tambahan saja agar saat pertama
         // diload akan ditampilkan text please select.
-        $dd[''] = 'Please Select';
+        $dd[''] = 'Pilih  Nama Instansi';
+		$dd['all'] = 'ALL';
         if ($result->num_rows() > 0) {
             foreach ($result->result() as $row) {
             // tentukan value (sebelah kiri) dan labelnya (sebelah kanan)
@@ -94,6 +95,7 @@ var $diklat='diklat';
         // please select berikut ini merupakan tambahan saja agar saat pertama
         // diload akan ditampilkan text please select.
         $dd[''] = 'Please Select';
+		
         if ($result->num_rows() > 0) {
             foreach ($result->result() as $row) {
             // tentukan value (sebelah kiri) dan labelnya (sebelah kanan)

@@ -29,7 +29,7 @@ class diklat extends CI_Controller{
     
 	
 	function dashboard_admin(){
-	        $query="select * from diklat";		
+	        $query="select diklat.*,peserta.* from diklat,peserta WHERE peserta.nip=diklat.nip";		
 			  $data['record']=  $this->db->query($query)->result();
 //		$data['profile']=  $this->db->query($query2)->result();
       
@@ -159,15 +159,14 @@ class diklat extends CI_Controller{
 		$result2 = $this->upload->data();
 	 //  $this->upload->do_upload('filesttp_name');
 	   
-   $result = array('file_sttp'=>$result1,'file_proper'=>$result2);
- $nm_file_sttp= $result['file_sttp']['file_name'];
-   $nm_file_proper= $result['file_proper']['file_name'];
+ 	$result = array('file_sttp'=>$result1,'file_proper'=>$result2);
+ 	$nm_file_sttp= $result['file_sttp']['file_name'];
+   	$nm_file_proper= $result['file_proper']['file_name'];
  
 	   if ($nm_file_proper !="") {
-	    // $data = $this->upload->data();
-	 
+	    // $data = $this->upload->data(); 
          $nip	              =   $this->input->post('nip');
-		 $jenis_diklat		=$this->input->post('jenis_diklat');
+		 $jenis_diklat		  =		$this->input->post('jenis_diklat');
          $namadiklat          =   $this->input->post('namadiklat');
          $tglmulai            =   $this->input->post('tglmulai');
          $tglselesai          =   $this->input->post('tglselesai');
@@ -279,7 +278,9 @@ class diklat extends CI_Controller{
             $data['title']=  $this->title;
             $data['desc']="";
             $id          =  $this->uri->segment(3);
-            $data['r']   =  $this->mcrud->getByID($this->tables,  $this->pk,$id)->row_array();
+			$q=$this->db->query("SELECT peserta.*,diklat.* FROM peserta,diklat WHERE peserta.nip=diklat.nip AND diklat.nosttp='".$id."'");
+            $data['r']   =  $q->row_array();
+			//$this->mcrud->getByID($this->tables,  $this->pk,$id)->row_array();
             $this->template->load('template', $this->folder.'/edit',$data);
         }
     }
@@ -340,12 +341,34 @@ $query="SELECT * FROM peserta";
 
 function laporan(){
 	$data=array();
+	
+	if($this->session->userdata('level')==1){
+	if ($this->input->post('instansi')){
+	$data['instansi']=$this->input->post('instansi');
+	}else{
+
+	$data['instansi']="all";
+		
+	}
+	if($this->input->post('instansi')=="all"){
+	$data['nama_instansi']="";	
+	}else{
+	$data['nama_instansi']="INSTANSI : ".$this->get_instansi($data['instansi']);
+	}
+	
+	$data['dd_instansi'] = $this->m_peserta->dd_instansi();
+//	 $this->template->load('template', 'diklat/laporan',$data);
 	$this->load->view('diklat/laporan',$data);
+	}else{
+		$data['instansi']=$this->session->userdata('sesi_instansi');
+		$data['nama_instansi']="INSTANSI : ".$this->get_instansi($data['instansi']);
+		$this->load->view('diklat/laporan',$data);
+	}
 }
 
 	  function laporan_json(){
 //	$q=$this->db->query("SELECT * FROM  WHERE kelompok='5' order by kode,id");
-		
+		$kode_instansi=$this->uri->segment(3);
 	 $table = 'diklat';
 	 $column_order = array('id_diklat','diklat.nip',null); //set column field database for datatable orderable
 	 $column_search = array('diklat.nip','nama','pangkat','jenis_diklat','instansi','namadiklat'); //set column field database for datatable searchable just firstname , lastname , address are searchable
@@ -353,7 +376,16 @@ function laporan(){
 	
 	  $i = 0;
 	$this->db->from($table);
-	$this->db->join('peserta', 'peserta.nip = diklat.nip');
+	if( $kode_instansi ==""){
+	$where="";			
+
+	}else if ($kode_instansi =="all"){
+			$where="";
+	}else{
+				$where="AND peserta.instansi='".$kode_instansi."'";	
+	}
+	$this->db->join('peserta', 'peserta.nip = diklat.nip '.$where);
+
 		foreach ($column_search as $item) // loop column 
 		{
 			if($_POST['search']['value']) // if datatable send POST for search
@@ -402,9 +434,10 @@ function laporan(){
 			//$row[] = $person->kelompok;
 			$row[] = $person->nip;
 			$row[] = $person->nama;
+			
+			$nama_instansi =$this->get_instansi($person->instansi);
 			$row[] = $person->pangkat."/".$person->gol;
-
-			$row[] = $person->instansi;
+			$row[] = $nama_instansi;
 			$row[] = $person->namadiklat;
 			$row[] = $person->penyelenggara;
 			$row[] = $person->nosttp;

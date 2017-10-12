@@ -1,17 +1,29 @@
-<html>
- 	<head>
-             
-   
- <script src="<?=base_url('assets/')?>/datatables/dataTables.bootstrap.js"></script>
 
-<script src="<?=base_url('assets/')?>/datatables/jquery-1.12.4.js"></script>
- <link type="text/css" href="<?=base_url()?>/bootstrap/css/bootstrap.min.css" rel="stylesheet"> 
- <link type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
- <link type="text/css" href="<?=base_url('assets/')?>/datatables/buttons.dataTables.min.css" >        
-  <link rel="stylesheet" href="<?php echo base_url();?>assets/themes/base/jquery.ui.all.css">
-   </head>
- <body>
-  <nav class="navbar navbar-inverse">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <!-- css table datatables/dataTables -->
+	<link rel="stylesheet" href="<?=base_url('assets/')?>/datatables/dataTables.bootstrap.css"/>
+    
+         <link type="text/css" href="<?=base_url('assets/')?>/css/bootstrap.css" rel="stylesheet">
+        <link type="text/css" href="<?=base_url()?>/bootstrap/css/bootstrap.min.css" rel="stylesheet">         
+        <link type="text/css" href="<?=base_url('assets/')?>/datatables/buttons.dataTables.min.css" >
+        <link type="text/css" href="<?=base_url()?>bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+
+        <link rel="stylesheet" href="<?php echo base_url()?>uadmin/css/themes.css">
+        <link type="text/css" href="images/icons/css/font-awesome.css" rel="stylesheet">
+        <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600'
+            rel='stylesheet'>
+            
+            
+      
+    </head>
+<body>
+         <nav class="navbar navbar-inverse">
                         <div class="navbar-header">
                             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                                 <span class="sr-only">Toggle navigation</span>
@@ -51,33 +63,24 @@
                                 ?>
                            
                             </ul>
-                            <ul class="nav navbar-nav navbar-right">
-                              
-                                <li class="dropdown">
-                                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo strtoupper($this->session->userdata('username'));?> <b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-                                        <li><?php echo anchor('users/profile',"<i class='fa fa-cogs'></i> Account");?></li>
-                                        <li><?php echo anchor('auth/logout',"<i class='fa fa-sign-out'></i> Logout");?></li>
-     
-                                    </ul>
-                                </li>
-                            </ul>
+                            
                         </div>
                     </nav>
-<h2 style="font-weight: normal;">Laporan Data <?=$nama_instansi?></h2>
-<div class="push">
-    <ol class="breadcrumb">
-        <li><i class='fa fa-home'></i> <a href="javascript:void(0)">Home</a></li>
-        <li>lAPORAN</li>
+                   
 
-    </ol>
-</div>
- <div class="row">
-
-        <div class="col-md-12">
- <div align="left" style="float:left" class="dropdown"> <em  style="vertical-align:auto; font-size:10px"><?php
- if($this->session->userdata('level')==1){
-	 echo "Pilih Nama Instansi : ";
+            <div class="container">
+                <div class="row">
+                    <div class="span12">
+                        <div class="content">
+             
+                                  <div class="panel panel-default">
+                        <div class="panel-heading">
+                        <h3 class="panel-title"><i class="icon-user"></i> Laporan Data <?=$nama_instansi?></h3> 
+                        </div>
+                        <div class="panel-body">
+                        
+                       <div align="right"> <em  style="vertical-align:auto; font-size:10px">ketikan nama instansi atau jenis diklat kolom cari </em></div>
+                         <div align="left" style="float:left" class="dropdown"> <em  style="vertical-align:auto; font-size:10px">Pilih Nama Instansi<?php
 						 echo form_open('diklat/laporan');
 						 $js = array(
               
@@ -85,8 +88,7 @@
 echo form_dropdown('instansi',$dd_instansi,'ALL',  'class="dropdown" onChange= submit();');
 //						 echo form_dropdown('instansi');
 						 echo form_close();
- } 
-						 ?> </em></div>
+						 ?> </em></div><br>
 <table id="lookup" class="table table-bordered table-hover">  
                <thead bgcolor="#eeeeee" align="center">
                                         <tr>
@@ -106,8 +108,20 @@ echo form_dropdown('instansi',$dd_instansi,'ALL',  'class="dropdown" onChange= s
                                         <tbody>
                                         </tbody>
                                     </table>
-                    <!-- END Datatables -->
-                    <script src="<?=base_url()?>/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+                                    
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <!--/.content-->
+                    </div>
+                    <!--/.span9-->
+                </div>
+            </div>
+            <!--/.container-->
+        
+        <!--/.wrapper--><br />
+    <script src="<?=base_url()?>/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
         
 <script src="<?=base_url('assets/')?>/datatables/jquery.dataTables.js"></script>
 <script src="<?=base_url('assets/')?>/datatables/dataTables.bootstrap.js"></script>
@@ -127,7 +141,7 @@ echo form_dropdown('instansi',$dd_instansi,'ALL',  'class="dropdown" onChange= s
 <script>
         $(document).ready(function() {
 				var dataTable = $('#lookup').DataTable( {
-					dom: 'Brftip',
+					dom: 'Bfrtip',
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
         ],
@@ -146,9 +160,5 @@ echo form_dropdown('instansi',$dd_instansi,'ALL',  'class="dropdown" onChange= s
 				} );
 			} );
         </script>
-        </script>
-        </script>
-        </div>
-        </div>
-        <body>
-                        </html>
+      
+</body>

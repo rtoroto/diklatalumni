@@ -27,9 +27,18 @@ $class      ="class='form-control'";
           </tr>
           <tr>
             <td width="150">NIP</td>
-            <td><?php echo inputan('text', 'nip','col-sm-2','NIP ..', 1, $r['nip'],'');?></td>
+            <td><?php //echo inputan('text', 'nip','col-sm-2','NIP ..', 1, $r['nip'],'');?> <?php
+			echo form_hidden('nip',$r['nip']);
+			?> <?=$r['nip']?></td>
           </tr>
-          
+           <tr>
+        <td>Nama Pegawai </td>
+        <td><?=$r['nama']?></td>
+      </tr>
+    <tr>
+        <td>Golongan </td>
+        <td><?=$r['gol']?></td>
+      </tr>
           <tr>
             <td>Nama Diklat </td>
             <td><?php echo inputan('text', 'namadiklat','col-sm-6','Nama Diklat ..', 1, $r['namadiklat'],'');?></td>

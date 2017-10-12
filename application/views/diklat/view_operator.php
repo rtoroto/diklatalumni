@@ -16,6 +16,7 @@ echo anchor($this->uri->segment(1).'/post',"<i class='fa fa-pencil-square-o'></i
                                 <th width="7">Nomor</th>
                                 <th>Nomor STTP </th>
                                 <th>NIP</th>
+                                 <th>Nama</th>
                                 <th>Tgl STTP </th>
                                 <th>Nama Diklat </th>
                                 <th>Judul Proper</th>
@@ -39,6 +40,7 @@ echo anchor($this->uri->segment(1).'/post',"<i class='fa fa-pencil-square-o'></i
                                 <td><?php echo $i;?></td>
                                 <td><?php echo $r->nosttp?></td>
                                 <td><?php echo $r->nip?></td>
+                                 <td><?php echo $r->nama?></td>
                                 <td><?php echo $r->tgl_sttp?></td>
                                 <td><?php echo $r->namadiklat?></td>
                                 <td><a href="<?php echo site_url('upload/'.$r->full_path)?>"> <?php echo $r->judullapproper?></a></td>
