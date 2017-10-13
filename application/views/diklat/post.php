@@ -146,7 +146,9 @@ else
           <td>Tanggal STTP</td>
           <td><?php echo inputan('text', 'tgl_sttp','col-sm-2','Tanggal STTP ..', 0, '',array('id'=>'datepicker1'));?></td>
         </tr>
-        
+        <?php
+		if($jenis_diklat=="DS"){
+		?>
         <tr>
           <td >Judul Laporan Proper </td>
           <td><?php echo inputan('text', 'judullapproper','col-sm-8','Judul Laporan Proper ..', 1, '','');?>
@@ -160,6 +162,10 @@ else
           <td>File Proper</td>
           <td><?=form_upload('file_name2');?></td>
         </tr>
+        
+        <?php
+		}
+		?>
          <tr>
           <td>File STTP</td>
           <td><?php echo form_upload('file_name1')?></td>
@@ -186,5 +192,22 @@ else
     
     
     }
+	
+	$('#jenis_diklat').bind('change', function () { // bind change event to select
+
+        var jenis_diklat = $(this).val(); // get selected value
+
+        if (jenis_diklat != '') { // require a URL
+           // window.location.replace('<?=$nip?>'+jenis_diklat); // redirect
+		   var url="<?php
+			 	  echo site_url('diklat/post/'.$nip.'/'); ?>"
+			 window.location.href =url+"/"+jenis_diklat ;
+        }
+        return false;
+    });
 	</script>
+    
+    <script>
+    
+</script>
   

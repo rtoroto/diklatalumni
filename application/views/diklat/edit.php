@@ -41,7 +41,7 @@ $class      ="class='form-control'";
       </tr>
       <tr>
         <td>instansi </td>
-        <td><?=$r['instansi']?></td>
+        <td><?=$r['nama_instansi']?></td>
       </tr>
           <tr>
             <td>Nama Diklat </td>

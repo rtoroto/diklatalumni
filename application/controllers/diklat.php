@@ -23,7 +23,7 @@ class diklat extends CI_Controller{
 		}else{
 			$this->dashboard_operator();
 		}
-        $query2="SELECT diklat.nosttp,diklat.nip,diklat.tgl_sttp,diklat.tglmulai,diklat.tglselesai,diklat.namadiklat,diklat.tempatdiklat,diklat.penyelenggara,diklat.angkatan,diklat.jml_jam,diklat.judullapproper,diklat.full_path,peserta.nama FROM diklat,peserta where diklat.nip=peserta.nip";
+//        $query2="SELECT diklat.nosttp,diklat.nip,diklat.tgl_sttp,diklat.tglmulai,diklat.tglselesai,diklat.namadiklat,diklat.tempatdiklat,diklat.penyelenggara,diklat.angkatan,diklat.jml_jam,diklat.judullapproper,diklat.full_path,peserta.nama FROM diklat,peserta where diklat.nip=peserta.nip";
 		
     }
     
@@ -74,7 +74,7 @@ class diklat extends CI_Controller{
        $nm_file_sttp= $result['file_sttp']['file_name'];
 	   $nm_file_proper= $result['file_proper']['file_name'];
  
-	   if (!empty($_FILES['file_name'])) {
+//	   if (!empty($_FILES['file_name'])) {
 	    // $data = $this->upload->data();
 	 
          $nip	              =   $this->input->post('nip');
@@ -106,7 +106,7 @@ class diklat extends CI_Controller{
     	   );
      	$this->db->insert('diklat', $query);
      	$this->session->set_flashdata('msg', 'File berhasil di input!');
-   		}
+  // 		}
 
    		
         redirect($this->uri->segment(1));			
@@ -116,6 +116,8 @@ class diklat extends CI_Controller{
         else
         {
 			$data['nip']=$this->uri->segment(3);
+			$data['jenis_diklat']=$this->uri->segment(4);
+			
 			$q=$this->db->query("SELECT * FROM peserta WHERE nip='".$data['nip']."'");
 			if($q->num_rows() >0){
 			foreach($q->result() as $dt){
@@ -145,7 +147,7 @@ class diklat extends CI_Controller{
 
         if($this->input->post('submit')=="simpan")
         {		
-		echo		$this->input->post('submit')."cek";
+		//		$this->input->post('submit')."cek";
 		   $config = array(
 		     'upload_path' => 'upload/',
 		     'allowed_types' => 'pdf|gif|jpg|png|', // |extensi lainnya
@@ -162,8 +164,9 @@ class diklat extends CI_Controller{
  	$result = array('file_sttp'=>$result1,'file_proper'=>$result2);
  	$nm_file_sttp= $result['file_sttp']['file_name'];
    	$nm_file_proper= $result['file_proper']['file_name'];
- 
-	   if ($nm_file_proper !="") {
+
+	   if ($this->input->post('nip') !="") {
+		    echo  $this->input->post('nip');
 	    // $data = $this->upload->data(); 
          $nip	              =   $this->input->post('nip');
 		 $jenis_diklat		  =		$this->input->post('jenis_diklat');
@@ -197,10 +200,12 @@ class diklat extends CI_Controller{
 		   
      	$this->db->insert('diklat', $query);
      	$this->session->set_flashdata('msg', 'File berhasil di input!');
-   		}
+   		}else{
+		echo "tidak terdeteksi nipnya";	
+		}
 
    		
-     redirect($this->uri->segment(1));			
+    redirect($this->uri->segment(1));			
      //	$data['result'] = $this->db->get('diklat')->result();
 //redirect('diklat');			
         }
@@ -278,7 +283,7 @@ class diklat extends CI_Controller{
             $data['title']=  $this->title;
             $data['desc']="";
             $id          =  $this->uri->segment(3);
-			$q=$this->db->query("SELECT peserta.*,diklat.* FROM peserta,diklat WHERE peserta.nip=diklat.nip AND diklat.nosttp='".$id."'");
+			$q=$this->db->query("SELECT peserta.*,diklat.*,instansi.nama_instansi FROM peserta,diklat,instansi WHERE peserta.nip=diklat.nip AND diklat.nosttp='".$id."'");
             $data['r']   =  $q->row_array();
 			//$this->mcrud->getByID($this->tables,  $this->pk,$id)->row_array();
             $this->template->load('template', $this->folder.'/edit',$data);
