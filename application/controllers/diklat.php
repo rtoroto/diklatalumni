@@ -29,7 +29,7 @@ class diklat extends CI_Controller{
     
 	
 	function dashboard_admin(){
-	        $query="select diklat.*,peserta.* from diklat,peserta WHERE peserta.nip=diklat.nip";		
+	        $query="select diklat.*,peserta.*,instansi.nama_instansi from diklat,peserta,instansi WHERE peserta.nip=diklat.nip AND instansi.kode_instansi=peserta.instansi";		
 			  $data['record']=  $this->db->query($query)->result();
 //		$data['profile']=  $this->db->query($query2)->result();
       
@@ -90,19 +90,19 @@ class diklat extends CI_Controller{
          $judullapproper      =   $this->input->post('judullapproper');
  
 	     $query = array(
-	       'nip' => $nip,
-	       'namadiklat' => $namadiklat,
-    	   'tglmulai' => $tglmulai,
-       	   'tglselesai' => $tglselesai,
-           'tempatdiklat' => $tempatdiklat,
-           'penyelenggara' => $penyelenggara,
-           'angkatan' => $angkatan,
-           'jml_jam' => $jml_jam,
-	       'nosttp' => $nosttp,
-           'tgl_sttp' => $tgl_sttp,
-		   'filesttp' => $nm_file_sttp,
+	       'nip' 			=> $nip,
+	       'namadiklat' 	=> $namadiklat,
+    	   'tglmulai' 		=> $tglmulai,
+       	   'tglselesai' 	=> $tglselesai,
+           'tempatdiklat' 	=> $tempatdiklat,
+           'penyelenggara' 	=> $penyelenggara,
+           'angkatan' 		=> $angkatan,
+           'jml_jam' 		=> $jml_jam,
+	       'nosttp' 		=> $nosttp,
+           'tgl_sttp' 		=> $tgl_sttp,
+		   'filesttp' 		=> $nm_file_sttp,
            'judullapproper' => $judullapproper,
-    	   'full_path' => $nm_file_proper
+    	   'full_path' 		=> $nm_file_proper
     	   );
      	$this->db->insert('diklat', $query);
      	$this->session->set_flashdata('msg', 'File berhasil di input!');
@@ -121,22 +121,24 @@ class diklat extends CI_Controller{
 			$q=$this->db->query("SELECT * FROM peserta WHERE nip='".$data['nip']."'");
 			if($q->num_rows() >0){
 			foreach($q->result() as $dt){
-				$data['nip']=$dt->nip;
-				$data['nama']=$dt->nama;
-				$data['gol']=$dt->gol;
-				$data['instansi']=$dt->instansi;
+				$data['nip']		=$dt->nip;
+				$data['nama']		=$dt->nama;
+				$data['gol']		=$dt->gol;
+				$data['instansi']	=$dt->instansi;
 				
 			}
 			}else{
-				$data['nip']="Klik Cari untuk pilih data peserta";
-				$data['nama']="";
-				$data['gol']="";
+				$data['nip']	="Klik Cari untuk pilih data peserta";
+				$data['nama']	="";
+				$data['gol']	="";
 				$data['instansi']="";
 			}
             $data['title']=  $this->title;
             $data['desc']="";
+			// $dd[$row->kode_instansi] = $row->nama_instansi;
+
+			$data['dd_jenis']=$this->m_peserta->dd_jenis_diklat1($data['jenis_diklat']);
 			
-		$data['dd_jenis']=$this->m_peserta->dd_jenis_diklat();
             $this->template->load('template', $this->folder.'/post',$data);
         }
     }
@@ -362,6 +364,7 @@ function laporan(){
 	}
 	
 	$data['dd_instansi'] = $this->m_peserta->dd_instansi();
+	$data['dd_jenis_diklat'] = $this->m_peserta->dd_jenis_diklat();
 //	 $this->template->load('template', 'diklat/laporan',$data);
 	$this->load->view('diklat/laporan',$data);
 	}else{

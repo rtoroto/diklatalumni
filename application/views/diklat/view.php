@@ -14,14 +14,14 @@ echo anchor($this->uri->segment(1).'/post',"<i class='fa fa-pencil-square-o'></i
                                         <tr>
 	  <th></th>
                                         <th>No</th>
-                                        <th>No STTP</th>
+                                        
 	                                    <th>Nip </th>
                                         <th>Nama </th>
                                         <th>Pangkat/Golongan</th>
                                         <th>Instansi </th>
 	                                    <th>Nama Diklat</th>
 	                                    <th class="text-center"> Penyelenggara </th> 
-                                        
+                                        <th>No STTP</th>
 	                                    <th class="text-center">Tgl STTP </th> 
                                         <th class="text-center">Nama Proper </th> 
 	   <th class="text-center">File STTP </th> 
@@ -41,12 +41,13 @@ echo anchor($this->uri->segment(1).'/post',"<i class='fa fa-pencil-square-o'></i
                                         <a href="<?php echo base_url().''.$this->uri->segment(1).'/delete/'.$r->nosttp;?>" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>                                                                            </div>                                </td>
                                         
                                 <td><?php echo $i;?></td>
-                                <td><?php echo $r->nosttp?></td>
+                                
                                 <td><?php echo $r->nip?></td>
                                  <td><?php echo $r->nama?></td>
-                                 <td><?php echo $r->pangkat?>/<?=$r->gol?></td><td><?php echo $r->instansi?></td>
+                                 <td><?php echo $r->pangkat?>/<?=$r->gol?></td><td><?php echo $r->nama_instansi?></td>
                                  <td><?php echo $r->namadiklat?></td>
                                  <td><?php echo $r->penyelenggara?></td>
+                                 <td><?php echo $r->nosttp?></td>
                                 <td><?php echo $r->tgl_sttp?></td>
                                
                                 <td><a href="<?php echo site_url('upload/'.$r->full_path)?>"> <?php echo $r->judullapproper?></a></td>

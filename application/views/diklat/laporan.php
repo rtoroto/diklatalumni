@@ -68,22 +68,37 @@
 <div class="push">
     <ol class="breadcrumb">
         <li><i class='fa fa-home'></i> <a href="javascript:void(0)">Home</a></li>
-        <li>lAPORAN</li>
+        <li>LAPORAN</li>
 
     </ol>
 </div>
  <div class="row">
 
         <div class="col-md-12">
- <div align="left" style="float:left" class="dropdown"> <em  style="vertical-align:auto; font-size:10px"><?php
+ <div align="left" style="float:left" class="dropdown"> <em  style="vertical-align:auto; font-size:12px">
+ 
+
+ 
+ <?php
  if($this->session->userdata('level')==1){
-	 echo "Pilih Nama Instansi : ";
+	 echo " <div class=\"form-group\">
+	 <label for=\"email\">Pilih Nama Instansi :</label> ";
 						 echo form_open('diklat/laporan');
 						 $js = array(
               
 );
-echo form_dropdown('instansi',$dd_instansi,'ALL',  'class="dropdown" onChange= submit();');
+echo form_dropdown('instansi',$dd_instansi,'ALL',  'class="form-control" onChange= submit();');
 //						 echo form_dropdown('instansi');
+echo " </div>";
+echo " <div class=\"form-group\">
+	 <label for=\"email\">Pilih Nama Instansi :</label> ";
+						 echo form_open('diklat/laporan');
+						 $js = array(
+              
+);
+echo form_dropdown('instansi',$dd_jenis_diklat,'ALL',  'class="form-control" onChange= submit();');
+//						 echo form_dropdown('instansi');
+echo " </div>";
 						 echo form_close();
  } 
 						 ?> </em></div>
@@ -115,7 +130,7 @@ echo form_dropdown('instansi',$dd_instansi,'ALL',  'class="dropdown" onChange= s
 <script src="<?=base_url('assets/')?>/datatables/jquery-1.12.4.js"></script>
 <script src="<?=base_url('assets/')?>/datatables/jquery.dataTables.min.js"></script>
 <script src="<?=base_url('assets/')?>/datatables/dataTables.buttons.min.js"></script>
-<script src="<?=base_url('assets/')?>/datatables/buttons.flash.min.js"></script>
+
 <script src="<?=base_url('assets/')?>/datatables/jszip.min.js"></script>
 <script src="<?=base_url('assets/')?>/datatables/pdfmake.min.js"></script>
 <script src="<?=base_url('assets/')?>/datatables/vfs_fonts.js"></script>
@@ -127,10 +142,11 @@ echo form_dropdown('instansi',$dd_instansi,'ALL',  'class="dropdown" onChange= s
 <script>
         $(document).ready(function() {
 				var dataTable = $('#lookup').DataTable( {
-					dom: 'Brftip',
+					dom: 'Brf | tip',
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ],
+           'excel', 'pdf', 'print'
+			
+			        ],
 					"processing": true,
 					"serverSide": true,
 					"ajax":{
@@ -146,8 +162,7 @@ echo form_dropdown('instansi',$dd_instansi,'ALL',  'class="dropdown" onChange= s
 				} );
 			} );
         </script>
-        </script>
-        </script>
+      
         </div>
         </div>
         <body>

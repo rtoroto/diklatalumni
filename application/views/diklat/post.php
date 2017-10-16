@@ -51,7 +51,7 @@ else
 }
 ?>
  <div class="row">
-<div class="panel-heading">
+ <div class="panel-heading">
     <h3 class="panel-title">Entry Record</h3>
 </div>
   <div class="col-md-12 clearfix">
@@ -106,7 +106,7 @@ else
       </tr>
        <tr>
         <td>Jenis Diklat </td>
-        <td><?php
+        <td><?php //echo $jenis_diklat;
 		$class      ="class='form-control' id='jenis_diklat'";
 		 echo form_dropdown('jenis_diklat',$dd_jenis,'',$class);?></td>
       </tr>

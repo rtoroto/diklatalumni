@@ -57,6 +57,8 @@ var $diklat='diklat';
         return $dd;
     }
 	
+	
+	
 	function dd_edit_instansi($kode)
     {
        
@@ -94,7 +96,28 @@ var $diklat='diklat';
         // bikin array
         // please select berikut ini merupakan tambahan saja agar saat pertama
         // diload akan ditampilkan text please select.
-        $dd[''] = 'Please Select';
+       // $dd[''] = 'Please Select';
+		
+        if ($result->num_rows() > 0) {
+            foreach ($result->result() as $row) {
+            // tentukan value (sebelah kiri) dan labelnya (sebelah kanan)
+                $dd[$row->kode_diklat] = $row->nama_diklat;
+            }
+        }
+        return $dd;
+    }
+	
+	
+	function dd_jenis_diklat1($selected)
+    {
+       
+        $this->db->order_by('kode_diklat', 'asc');
+        $result = $this->db->get('jenisdiklat');
+        
+        // bikin array
+        // please select berikut ini merupakan tambahan saja agar saat pertama
+        // diload akan ditampilkan text please select.
+       $dd[$selected] = $selected;
 		
         if ($result->num_rows() > 0) {
             foreach ($result->result() as $row) {
