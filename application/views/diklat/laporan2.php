@@ -23,13 +23,10 @@
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="#">Home</a></li>
-      <li><a href="#">Diklat</a></li>
-      <li><a href="#">laporan</a></li>
+      <li><?=anchor('diklat/','Diklat')?></li>
+      <li><?=anchor('diklat/laporan2','Laporan')?></li>
     </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-    </ul>
+   
   </div>
 </nav>
     
