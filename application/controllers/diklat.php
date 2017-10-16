@@ -483,8 +483,11 @@ function laporan2(){
 	$data['instansi']="all";
 		
 	}
+	
+	
+	
 	if($this->input->post('instansi')=="all"){
-	$data['nama_instansi']="";	
+	$data['nama_instansi']="SEMUA INSTANSI";	
 	}else{
 	$data['nama_instansi']="INSTANSI : ".$this->get_instansi($data['instansi']);
 	}
@@ -492,17 +495,28 @@ function laporan2(){
 	$data['dd_instansi'] = $this->m_peserta->dd_instansi();
 	$data['dd_jenis_diklat'] = $this->m_peserta->dd_jenis_diklat();
 //	 $this->template->load('template', 'diklat/laporan',$data);
-	$this->load->view('diklat/laporan2',$data);
+
 	}else{
 		$data['instansi']=$this->session->userdata('sesi_instansi');
 		$data['nama_instansi']="INSTANSI : ".$this->get_instansi($data['instansi']);
-		$this->load->view('diklat/laporan2',$data);
+		
 	}
+	
+	if ($this->input->post('jenis_diklat')){
+	$data['jenis_diklat']=$this->input->post('jenis_diklat');
+	}else{
+
+	$data['jenis_diklat']="all";
+		
+	}
+	$data['namadiklat']=$this->get_jenis_diklat($data['jenis_diklat']);
+	$this->load->view('diklat/laporan2',$data);
 }
 
 	  function laporan_json(){
 //	$q=$this->db->query("SELECT * FROM  WHERE kelompok='5' order by kode,id");
 		$kode_instansi=$this->uri->segment(3);
+		$jenis_diklat=$this->uri->segment(4);
 	 $table = 'diklat';
 	 $column_order = array('id_diklat','diklat.nip',null); //set column field database for datatable orderable
 	 $column_search = array('diklat.nip','nama','pangkat','jenis_diklat','instansi','namadiklat'); //set column field database for datatable searchable just firstname , lastname , address are searchable
@@ -518,7 +532,17 @@ function laporan2(){
 	}else{
 				$where="AND peserta.instansi='".$kode_instansi."'";	
 	}
-	$this->db->join('peserta', 'peserta.nip = diklat.nip '.$where);
+	
+	if( $jenis_diklat ==""){
+	$where1="";			
+
+	}else if ($jenis_diklat =="all"){
+			$where1="";
+	}else{
+				$where1="AND diklat.jenisdiklat='".$jenis_diklat."'";	
+	}
+	
+	$this->db->join('peserta', 'peserta.nip = diklat.nip '.$where.' '.$where);
 
 		foreach ($column_search as $item) // loop column 
 		{
@@ -603,6 +627,20 @@ $tot_jml=$q_all->num_rows();
 	foreach($q->result() as $dt){
 	$nama=$dt->nama_instansi;	
 	}
+	
+	return $nama;
+   }
+   
+    function get_jenis_diklat($kd){
+	   $nama="";
+	   if(strtoupper($kd)=="ALL"){
+		$nama="SEMUA JENIS DIKLAT";	   
+	   }else{
+	$q=$this->db->query("SELECT nama_diklat FROM jenisdiklat WHERE kode_diklat='".$kd."'");   
+	foreach($q->result() as $dt){
+	$nama=$dt->nama_diklat;	
+	}
+	   }
 	
 	return $nama;
    }

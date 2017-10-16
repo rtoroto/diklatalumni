@@ -43,31 +43,47 @@
                 <h3 class="panel-title" >Custom Filter : </h3>
             </div>
             <div class="panel-body">
-                <form id="form-filter" class="form-horizontal">
-                   
-                    <div class="form-group">
-                        <label for="FirstName" class="col-sm-2 control-label">Jenis Diklat</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" id="FirstName">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="LastName" class="col-sm-2 control-label">Instansi</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" id="LastName">
-                        </div>
-                    </div>
-                 
+            <?php
+ if($this->session->userdata('level')==1){
+	 
+						 echo form_open('diklat/laporan2');
+						 $js = array(
+              
+);
+echo " <div class=\"form-group\">
+	 ";
+echo '<div class="col-sm-4">';
+echo form_dropdown('instansi',$dd_instansi,'ALL',  'class="form-control"');
+//						 echo form_dropdown('instansi');
+echo " </div></div>";
+echo " <div class=\"form-group\">
+	 ";
+						 echo form_open('diklat/laporan');
+						 $js = array(
+              
+);
+echo '<div class="col-sm-4">';
+echo form_dropdown('jenis_diklat',$dd_jenis_diklat,'ALL',  'class="form-control" ');
+//						 echo form_dropdown('instansi');
+echo " </div></div>";
+						// echo form_close();
+ } 
+						 ?> 
+               
                     <div class="form-group">
                         <label for="LastName" class="col-sm-2 control-label"></label>
                         <div class="col-sm-4">
-                            <button type="button" id="btn-filter" class="btn btn-primary">Filter</button>
+                            <button type="button" id="btn-filter" class="btn btn-primary" onClick="submit()">Filter</button>
                             <button type="button" id="btn-reset" class="btn btn-default">Reset</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
+        <?php
+		echo $nama_instansi."<br>";
+				echo $namadiklat."<br>";
+		?>
 <table class="table table-striped table-desa">
 <thead>
 <tr> <tr>
@@ -123,7 +139,7 @@ $(".table-desa").DataTable({
 	serverSide: true,
 	
 	ajax: {
-	  url: "<?=site_url('diklat/laporan_json/'.$instansi)?>",
+	  url: "<?=site_url('diklat/laporan_json/'.$instansi.'/'.$jenis_diklat)?>",
 	  type:'POST',
 	}
 });
