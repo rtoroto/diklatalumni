@@ -472,6 +472,34 @@ function laporan(){
 	}
 }
 
+function laporan2(){
+	$data=array();
+	
+	if($this->session->userdata('level')==1){
+	if ($this->input->post('instansi')){
+	$data['instansi']=$this->input->post('instansi');
+	}else{
+
+	$data['instansi']="all";
+		
+	}
+	if($this->input->post('instansi')=="all"){
+	$data['nama_instansi']="";	
+	}else{
+	$data['nama_instansi']="INSTANSI : ".$this->get_instansi($data['instansi']);
+	}
+	
+	$data['dd_instansi'] = $this->m_peserta->dd_instansi();
+	$data['dd_jenis_diklat'] = $this->m_peserta->dd_jenis_diklat();
+//	 $this->template->load('template', 'diklat/laporan',$data);
+	$this->load->view('diklat/laporan2',$data);
+	}else{
+		$data['instansi']=$this->session->userdata('sesi_instansi');
+		$data['nama_instansi']="INSTANSI : ".$this->get_instansi($data['instansi']);
+		$this->load->view('diklat/laporan2',$data);
+	}
+}
+
 	  function laporan_json(){
 //	$q=$this->db->query("SELECT * FROM  WHERE kelompok='5' order by kode,id");
 		$kode_instansi=$this->uri->segment(3);
