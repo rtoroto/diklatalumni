@@ -38,7 +38,8 @@
 |
 */
 
-$route['default_controller'] = "auth/login";
+//$route['default_controller'] = "auth/login";
+$route['default_controller'] = "diklat/view_front";
 $route['404_override'] = '';
 
 

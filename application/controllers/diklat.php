@@ -27,7 +27,96 @@ class diklat extends CI_Controller{
 		
     }
     
+function view_front(){
+$this->load->view('diklat/view_front');	
+}
+
+function view_proper_publik(){
 	
+	 $table = 'diklat';
+	 $column_order = array('diklat.judullapproper','peserta.nama',null); //set column field database for datatable orderable
+	 $column_search = array('diklat.judullapproper','peserta.nama'); //set column field database for datatable searchable just firstname , lastname , address are searchable
+	$order = array('id' => 'ASC'); // default order 
+	
+	  $i = 0;
+	$this->db->from($table);
+$this->db->join('peserta','diklat.nip=peserta.nip');	
+
+
+		foreach ($column_search as $item) // loop column 
+		{
+			if($_POST['search']['value']) // if datatable send POST for search
+			{
+				
+				if($i===0) // first loop
+				{
+					$this->db->like($item, $_POST['search']['value']);
+				}
+				else
+				{
+					$this->db->or_like($item, $_POST['search']['value']);
+				}
+			}
+			$i++;
+		}
+		
+		if(isset($_POST['order'])) // here order processing
+		{
+			$this->db->order_by($column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+		} 
+		else if(isset($order))
+		{
+			$order = $order;
+			$this->db->order_by(key($order), $order[key($order)]);
+		}
+	
+
+	 
+	 if($_POST['length'] != -1)
+        $this->db->limit($_POST['length'], $_POST['start']);
+      //  $query = $this->db->get();	
+	//	$this->db->limit($_POST['length'], $_POST['start']);
+		$query = $this->db->get();
+		$list = $query->result();
+	  
+		$data = array();
+		$no = $_POST['start'];
+		
+		
+			
+		
+		foreach ($list as $person) {
+			$no=$no*1;
+			$no++;
+			$row = array();
+			$row[] = $no;
+			//$row[] = $person->kelompok;
+			
+			$row[] = $person->nama;
+			
+		
+			$row[] = $person->judullapproper;
+			$row[] = "<button type=\"button\" class=\"btn btn-warning btn-xs\"><span class=\"glyphicon glyphicon-download\"></span></button>";
+			
+			//add html for action
+			
+		
+			$data[] = $row;
+		}
+
+$jml=$query->num_rows();
+$q_all=$this->db->query("SELECT * fROM $table ");
+$tot_jml=$q_all->num_rows();
+		$output = array(
+						"draw" => $_POST['draw'],
+						"recordsTotal" =>$tot_jml*1,
+						"recordsFiltered" => $jml*1,
+						"data" => $data,
+				);
+		//output to json format
+		echo json_encode($output); 
+}
+
 	function dashboard_admin(){
 	        $query="select diklat.*,peserta.*,instansi.nama_instansi from diklat,peserta,instansi WHERE peserta.nip=diklat.nip AND instansi.kode_instansi=peserta.instansi";		
 			  $data['record']=  $this->db->query($query)->result();
@@ -323,7 +412,7 @@ public function get_peserta() {
         echo json_encode($data);
     }
 	
-	function tampil_peserta(){
+	function tampil_peserta1(){
 	
 	$level	= $this->session->userdata('level');
 		
@@ -344,6 +433,15 @@ $query="SELECT * FROM peserta";
 	$this->template->load('template', 'peserta/tampil_peserta',$data);
 	
 	//	$this->load->view('peserta/tampil_peserta',$data);
+	}
+	function tampil_peserta(){
+	
+	$data['level']	= $this->session->userdata('level');
+	$data['instansi']= $this->session->userdata('sesi_instansi');
+		
+		
+	
+		$this->load->view('peserta/tampil_peserta1',$data);
 	}
 
 function laporan(){
@@ -423,7 +521,9 @@ function laporan(){
 	
 
 	 
-		
+	 if($_POST['length'] != -1)
+        $this->db->limit($_POST['length'], $_POST['start']);
+      //  $query = $this->db->get();	
 	//	$this->db->limit($_POST['length'], $_POST['start']);
 		$query = $this->db->get();
 		$list = $query->result();

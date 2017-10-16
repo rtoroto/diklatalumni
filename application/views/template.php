@@ -94,7 +94,7 @@ if($this->session->userdata('id_users')=='')
     </div> 
       <div class="clear:both"></div>
       <hr>
-      <p align='center' style="font-weight: bold;" >&copy; SISFO DATA ALUMNI DIKLAT v1.0 | Hery Susanto Software </p>
+      <p align='center' style="font-weight: bold;" >&nbsp;</p>
       <!--
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="<?php echo base_url()?>uadmin/js/jquery.min.js"></script>
